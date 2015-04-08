@@ -3,3 +3,16 @@
 ro.sf.lcd_density=240
 com.qc.hardware=true
 debug.qc.hardware=true
+ro.product.model=MotoE2(4G-LTE)
+ro.product.brand=motorola
+ro.product.name=surnia_retus
+ro.product.device=surnia_umts
+ro.product.board=msm8916
+ro.product.cpu.abi=armeabi-v7a
+ro.product.cpu.abi2=armeabi
+ro.product.cpu.abilist=armeabi-v7a,armeabi
+ro.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.product.cpu.abilist64=
+ro.product.manufacturer=motorola
+ro.board.platform=msm8916
+ro.build.product=surnia_umts
