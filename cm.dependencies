@@ -1,7 +1,7 @@
 [
   {
-    "repository": "android_kernel_motorola_surnia",
-    "target_path": "kernel/motorola/surnia"
+    "repository": "android_kernel_motorola_msm8916",
+    "target_path": "kernel/motorola/msm8916"
   },
   {
     "repository": "android_hardware_qcom_display-caf-new",
@@ -18,6 +18,10 @@
   {
     "repository": "android_frameworks_opt_connectivity",
     "target_path": "frameworks/opt/connectivity"
+  },
+  {
+    "repository": "android_device_qcom_common",
+    "target_path": "device/qcom/common"
   },
   {
     "repository": "android_device_motorola_qcom-common",
