@@ -56,9 +56,6 @@ on init
     symlink /storage/emulated/legacy /mnt/sdcard
     symlink /storage/emulated/legacy /storage/sdcard0
 
-    # CM: We use our own ril-daemon service definition, see mmi-ril-daemon
-    stop ril-daemon
-
     # Configure coredump
     write /proc/sys/kernel/core_pattern "|/system/bin/coredump %e %p %t"
     write /proc/self/coredump_filter "0x7f"
@@ -90,6 +87,9 @@ on fs
     # Set permissions for BL logs
     exec /system/bin/chmod -L 640 /dev/block/platform/soc.0/by-name/logs
     exec /system/bin/chown -L root:system /dev/block/platform/soc.0/by-name/logs
+
+    mkdir /persist/data 0700  system system
+    restorecon_recursive /persist
 
     # activate zram
     swapon_all fstab.qcom
@@ -413,12 +413,6 @@ service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
     user root
     oneshot
 
-service qcom-c_main-sh /system/bin/sh /init.class_main.sh
-    class main
-    user radio
-    group radio
-    oneshot
-
 on property:vold.decrypt=trigger_restart_framework
     start config_bluetooth
 
@@ -563,7 +557,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service dhcpcd_wlan0 /system/bin/dhcpcd
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG
     class late_start
     disabled
     oneshot
@@ -699,7 +693,14 @@ on property:ro.data.large_tcp_window_size=true
 #    group system
 #    disabled
 
-service mmi-ril-daemon /system/bin/rild
+on property:persist.radio.multisim.config=dsds
+    start ril-daemon2
+
+on property:vold.decrypt=trigger_restart_framework
+    stop ril-daemon
+
+
+service redefine ril-daemon /system/bin/rild
     class main
     socket rild stream 660 root radio
     socket rild-debug stream 660 radio system
@@ -713,21 +714,17 @@ service ril-daemon2 /system/bin/rild -c 2
     socket rild-debug2 stream 660 radio system
     user root
     disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw diag qcom_diag log
-
-service ril-daemon3 /system/bin/rild -c 3
-    class main
-    socket rild3 stream 660 root radio
-    socket rild-debug3 stream 660 radio system
-    user root
-    disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw diag qcom_diag log
+    group radio cache inet misc audio sdcard_rw sensors qcom_diag log net_raw diag
 
 service usb_uicc_daemon /system/bin/usb_uicc_client
     class main
     user system
     group system log net_raw
     oneshot
+
+on property:hw.fm.mode=*
+    insmod /system/lib/modules/radio-iris-transport.ko
+
 
 on property:sys.usb_uicc.enabled=1
     start usb_uicc_enable
