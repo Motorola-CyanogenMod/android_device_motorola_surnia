@@ -45,6 +45,7 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
 {
     char platform[PROP_VALUE_MAX];
     char radio[PROP_VALUE_MAX];
+    char radio[PROP_VALUE_MAX];
     char device[PROP_VALUE_MAX];
     char devicename[PROP_VALUE_MAX];
     int rc;
@@ -58,6 +59,7 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
         return;
 
     property_get("ro.boot.radio", radio);
+    property_get("ro.boot.fsg-id", fsg_id);
     if (ISMATCH(radio, "0x1")) {
         /* XT1527 */
         gsm_properties(false);
@@ -70,7 +72,7 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
         property_set("ro.mot.build.customerid", "retus");
     } else if (ISMATCH(radio, "0x3")){
         /* XT1526 */
-	// Set CDMA SUBSCRIPTION SOURCE to RUIM in Database for this device (O for RUIM 1 for NV)
+        // Set CDMA SUBSCRIPTION SOURCE to RUIM in Database for this device (O for RUIM 1 for NV)
         cdma_properties("0");
         property_set("ro.product.name", "surnia_boost");
         property_set("ro.product.model", "XT1526");
@@ -86,10 +88,31 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
         property_set("ro.cdma.international.eri", "2,74,124,125,126,157,158,159,193,194,195,196,197,198,228,229,230,231,232,233,234,235");
         property_set("persist.radio.lifecalls", "0");
         property_set("persist.radio.lifetimer", "0");
-        property_set("ro.carrier", "sprint");
-	property_set("ro.ril.force_eri_from_xml", "true");
-	property_set("ro.cdma.home.operator.numeric", "311870");
-	property_set("ro.cdma.home.operator.alpha", "Boost Mobile");
+        property_set("ro.ril.force_eri_from_xml", "true");
+        property_set("ro.product.locale.region", "US");
+        property_set("gsm.sim.operator.iso-country", "US");
+        if (ISMATCH(fsg_id, "virgin")){
+                property_set("ro.cdma.home.operator.numeric", "311490");
+                property_set("ro.cdma.home.operator.alpha", "Virgin Mobile US");
+                property_set("gsm.sim.operator.alpha", "Virgin Mobile US");
+                property_set("gsm.sim.operator.numeric", 311490);
+                property_set("gsm.operator.alpha", "Virgin Mobile US");
+                property_set("gsm.operator.numeric", 311490);
+        } else if (ISMATCH(fsg_id, "sprint")){
+                property_set("ro.cdma.home.operator.numeric", "310120");
+                property_set("ro.cdma.home.operator.alpha", "Sprint");
+                property_set("gsm.sim.operator.alpha", "Sprint");
+                property_set("gsm.sim.operator.numeric", 310120);
+                property_set("gsm.operator.alpha", "Sprint");
+                property_set("gsm.operator.numeric", 310120);
+        } else {
+                property_set("ro.cdma.home.operator.numeric", "311870");
+                property_set("ro.cdma.home.operator.alpha", "Boost Mobile");
+                property_set("gsm.sim.operator.alpha", "Boost Mobile");
+                property_set("gsm.sim.operator.numeric", 311870);
+                property_set("gsm.operator.alpha", "Boost Mobile");
+                property_set("gsm.operator.numeric", 311870);
+        }
     } else if (ISMATCH(radio, "0x4")) {
         /* XT1524 */
         gsm_properties(false);

@@ -3,18 +3,17 @@ PATH=/system/bin
 TAG="scritch007"
 
 product_model=`getprop ro.product.model`
+fsg_id=`getprop ro.boot.fsg-id`
 
 if [ "XT1526" = $product_model ]; then
-	log -t$TAG "Applying LTE fix"
-	setprop ro.product.locale.region "US"
-	setprop gsm.sim.operator.alpha "Boost Mobile"
-	setprop gsm.sim.operator.numeric 311870
-	setprop gsm.operator.alpha "Boost Mobile"
-	setprop gsm.operator.numeric 311870
-	setprop gsm.sim.operator.iso-country "US"
-	cp /system/etc/boost/eri.xml /data/eri.xml
+	log -t$TAG "Applying LTE fix for $fsg_id"
+	if [ "" = $fsg_id ]; then
+		#Force to boost for compatibility issues
+		fsg_id=boost
+	fi
+	cp /system/etc/cdma/$fsg_id/eri.xml /data/eri.xml
 	chmod 644 /data/eri.xml
-	cp /system/etc/boost/apns-conf.xml /system/etc/apns-conf.xml
+	cp /system/etc/cdma/$fsg_id/apns-conf.xml /system/etc/apns-conf.xml
 	chmod 644 /system/etc/apns-conf.xml
 fi
 
