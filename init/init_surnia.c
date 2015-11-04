@@ -45,7 +45,7 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
 {
     char platform[PROP_VALUE_MAX];
     char radio[PROP_VALUE_MAX];
-    char radio[PROP_VALUE_MAX];
+    char fsg_id[PROP_VALUE_MAX];
     char device[PROP_VALUE_MAX];
     char devicename[PROP_VALUE_MAX];
     int rc;
@@ -95,23 +95,23 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
                 property_set("ro.cdma.home.operator.numeric", "311490");
                 property_set("ro.cdma.home.operator.alpha", "Virgin Mobile US");
                 property_set("gsm.sim.operator.alpha", "Virgin Mobile US");
-                property_set("gsm.sim.operator.numeric", 311490);
+                property_set("gsm.sim.operator.numeric", "311490");
                 property_set("gsm.operator.alpha", "Virgin Mobile US");
-                property_set("gsm.operator.numeric", 311490);
+                property_set("gsm.operator.numeric", "311490");
         } else if (ISMATCH(fsg_id, "sprint")){
                 property_set("ro.cdma.home.operator.numeric", "310120");
                 property_set("ro.cdma.home.operator.alpha", "Sprint");
                 property_set("gsm.sim.operator.alpha", "Sprint");
-                property_set("gsm.sim.operator.numeric", 310120);
+                property_set("gsm.sim.operator.numeric", "310120");
                 property_set("gsm.operator.alpha", "Sprint");
-                property_set("gsm.operator.numeric", 310120);
+                property_set("gsm.operator.numeric", "310120");
         } else {
                 property_set("ro.cdma.home.operator.numeric", "311870");
                 property_set("ro.cdma.home.operator.alpha", "Boost Mobile");
                 property_set("gsm.sim.operator.alpha", "Boost Mobile");
-                property_set("gsm.sim.operator.numeric", 311870);
+                property_set("gsm.sim.operator.numeric", "311870");
                 property_set("gsm.operator.alpha", "Boost Mobile");
-                property_set("gsm.operator.numeric", 311870);
+                property_set("gsm.operator.numeric", "311870");
         }
     } else if (ISMATCH(radio, "0x4")) {
         /* XT1524 */
