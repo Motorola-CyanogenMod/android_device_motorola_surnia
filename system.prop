@@ -5,6 +5,7 @@ com.qc.hardware=true
 debug.qc.hardware=true
 
 # Rild
+persist.data.qmi.adb_logmask=0
 rild.libpath=/system/vendor/lib/libril-qc-qmi-1.so
 rild.libargs=-d /dev/smd0
 persist.rild.nitz_plmn=
