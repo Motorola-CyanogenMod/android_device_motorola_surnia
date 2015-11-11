@@ -39,21 +39,23 @@ TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
 
 #Kernel
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x3F ehci-hcd.park=3 vmalloc=400M androidboot.bootdevice=soc.0 utags.blkdev=/dev/block/platform/soc.0/by-name/utags utags.backup=/dev/block/platform/soc.0/by-name/utagsBackup movablecore=160M
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_RAMDISK_OFFSET := 0x01000000
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 TARGET_KERNEL_SOURCE := kernel/motorola/msm8916
 TARGET_KERNEL_CONFIG := surnia_defconfig
+TARGET_KERNEL_ARCH := arm
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
+AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
 AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
 TARGET_USES_QCOM_MM_AUDIO := true
 
@@ -87,7 +89,7 @@ OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
 # FM
 TARGET_QCOM_NO_FM_FIRMWARE := true
-AUDIO_FEATURE_ENABLED_FM := true
+#AUDIO_FEATURE_ENABLED_FM := true
 
 # GPS
 TARGET_GPS_HAL_PATH := $(LOCAL_PATH)/gps
@@ -100,7 +102,7 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 #TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
 TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_msm
-TARGET_LIBINIT_DEFINES_FILE := $(LOCAL_PATH)/init/init_surnia.c
+TARGET_LIBINIT_DEFINES_FILE := $(LOCAL_PATH)/init/init_surnia.cpp
 
 # Asserts
 TARGET_OTA_ASSERT_DEVICE := XT1514,XT1521,XT1524,XT1526,XT1527,XT1523,surnia_uds,surnia_umts,surnia,surnia_udstv
@@ -110,9 +112,6 @@ TARGET_PROVIDES_LIBLIGHT := true
 
 # Media
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
-
-# Motorola
-TARGET_USES_MOTOROLA_LOG := true
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072
@@ -142,34 +141,6 @@ include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
     device/motorola/surnia/sepolicy
-
-BOARD_SEPOLICY_UNION += \
-    atvc.te \
-    batt_health.te \
-    bluetooth_loader.te \
-    bootanim.te \
-    device.te \
-    file.te \
-    file_contexts \
-    healthd.te \
-    init.te \
-    init_shell.te \
-    mm-qcamerad.te \
-    mpdecision.te \
-    property.te \
-    property_contexts \
-    qseecomd.te \
-    qcamerasvr.te \
-    rild.te \
-    rmt_storage.te \
-    shell.te \
-    stml0xx.te \
-    surfaceflinger.te \
-    system_server.te \
-    tee.te \
-    ueventd.te \
-    vold.te \
-    wcnss_service.te
 
 # Time services
 BOARD_USES_QC_TIME_SERVICES := true

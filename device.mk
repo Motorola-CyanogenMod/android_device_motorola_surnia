@@ -98,7 +98,8 @@ PRODUCT_PACKAGES += \
 
 # Motorola
 PRODUCT_PACKAGES += \
-    charge_only_mode
+    charge_only_mode \
+    libmoto
 
 # Misc
 PRODUCT_PACKAGES += \
@@ -133,11 +134,11 @@ PRODUCT_PACKAGES += \
     libebtc
 
 # FM
-PRODUCT_PACKAGES += \
-    FM2 \
-    FMRecord \
-    libqcomfm_jni \
-    qcom.fmradio
+#PRODUCT_PACKAGES += \
+#    FM2 \
+#    FMRecord \
+#    libqcomfm_jni \
+#    qcom.fmradio
 
 # Keystore
 PRODUCT_PACKAGES += \
@@ -181,6 +182,11 @@ PRODUCT_PACKAGES += \
     init.mmi.usb.sh \
     init.qcom.rc \
     ueventd.qcom.rc
+
+# Stlport
+PRODUCT_PACKAGES += \
+    libstlport
+
 
 
 # Wifi

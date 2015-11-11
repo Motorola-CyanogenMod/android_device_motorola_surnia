@@ -38,7 +38,7 @@
 #include "init_msm.h"
 
 void gsm_properties(bool msim);
-void cdma_properties(char cdma_sub[]);
+void cdma_properties(const char *cdma_sub);
 
 
 void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *board_type)
@@ -70,6 +70,7 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
         property_set("ro.mot.build.customerid", "retus");
     } else if (ISMATCH(radio, "0x3")){
         /* XT1526 */
+	// Set CDMA SUBSCRIPTION SOURCE to RUIM in Database for this device (O for RUIM 1 for NV)
         cdma_properties("0");
         property_set("ro.product.name", "surnia_boost");
         property_set("ro.product.model", "XT1526");
@@ -86,6 +87,9 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
         property_set("persist.radio.lifecalls", "0");
         property_set("persist.radio.lifetimer", "0");
         property_set("ro.carrier", "sprint");
+	property_set("ro.ril.force_eri_from_xml", "true");
+	property_set("ro.cdma.home.operator.numeric", "311870");
+	property_set("ro.cdma.home.operator.alpha", "Boost Mobile");
     } else if (ISMATCH(radio, "0x4")) {
         /* XT1524 */
         gsm_properties(false);
@@ -132,13 +136,15 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
     strlcpy(devicename, device, sizeof(devicename));
     ERROR("Found radio id: %s setting build properties for %s device\n", radio, devicename);
 }
-void cdma_properties(char cdma_sub[])
+void cdma_properties(const char *cdma_sub)
 {
     property_set("ro.telephony.default_cdma_sub", cdma_sub);
     property_set("ril.subscription.types","NV,RUIM");
     property_set("DEVICE_PROVISIONED","1");
     property_set("telephony.lteOnCdmaDevice", "1");
-    property_set("ro.telephony.default_network", "10");
+    //Is it a bad typo or not? Don't know so I'll leave it there for now
+    property_set("telephony.slteOnCdmaDevice", "1");
+    property_set("ro.telephony.default_network", "8");
 }
 void gsm_properties(bool msim)
 {
