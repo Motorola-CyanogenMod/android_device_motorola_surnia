@@ -163,6 +163,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     curl \
     libbson \
+    libqsap_sdk \
     libcurl \
     tcpdump
 
