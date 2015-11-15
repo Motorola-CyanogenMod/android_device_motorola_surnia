@@ -103,7 +103,8 @@ PRODUCT_PACKAGES += \
 
 # Misc
 PRODUCT_PACKAGES += \
-    libxml2
+    libxml2 \
+    Mms
 
 # OMX
 PRODUCT_PACKAGES += \
