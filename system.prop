@@ -73,7 +73,7 @@ persist.gps.qc_nlp_in_use=0
 persist.mot.gps.smart_battery=1
 ro.gps.agps_provider=1
 ro.pip.gated=0
-ro.frp.pst=/dev/block/platform/soc.0/by-name/frp
+ro.frp.pst=/dev/block/bootdevice/by-name/frp
 
 #
 # system prop for opengles version

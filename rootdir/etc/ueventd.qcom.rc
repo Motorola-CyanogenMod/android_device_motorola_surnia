@@ -63,8 +63,7 @@
 /dev/ipa                  0660   net_admin  net_admin
 /dev/wwan_ioctl           0660   net_admin  net_admin
 /dev/ipaNatTable          0660   net_admin  net_admin
-
-/dev/block/platform/soc.0/by-name/frp 0600 system system
+/dev/block/platform/soc.0/7824900.sdhci/by-name/frp 0600 system system
 
 #permissions for CSVT
 /dev/smd11                0660   radio      radio
