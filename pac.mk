@@ -19,15 +19,16 @@ PRODUCT_RELEASE_NAME := surnia
 TARGET_SCREEN_WIDTH := 540
 TARGET_SCREEN_HEIGHT := 960
 
+PAC_BOOTANIMATION_NAME := 540
+
 $(call inherit-product, device/motorola/surnia/full_surnia.mk)
 
 # Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
-
+$(call inherit-product, vendor/pac/config/common_full_phone.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := surnia
-PRODUCT_NAME := cm_surnia
+PRODUCT_NAME := pac_surnia
 PRODUCT_BRAND := motorola
 PRODUCT_MODEL := surnia
 PRODUCT_MANUFACTURER := motorola
